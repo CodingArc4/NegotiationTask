@@ -1,0 +1,17 @@
+﻿@model List<NegotiationTask.Models.Person>
+
+<h1>_Partial View</h1>
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+    </tr>
+    @foreach (var person in Model)
+    {
+        <tr>
+            <td>@person.Name</td>
+            <td>@person.Description</td>
+        </tr>
+    }
+</table>

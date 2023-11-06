@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Content Negotiation Page</title>
+</head>
+<body>
+    <h1>Content Negotiation</h1>
+
+    <label for="contentSelect">Select Content Type:</label>
+    <select id="contentSelect">
+        <option value="application/json">application/json</option>
+        <option value="text/html">text/html</option>
+        <option value="text/plain">text/plain</option>
+        <option value="text/css">text/css</option>
+    </select>
+
+    <button id="submitButton" class="btn btn-primary">Submit</button>
+
+    <div id="resultDisplay"></div>
+</body>
+</html>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $("#submitButton").click(function () {
+                var selectedContentType = $("#contentSelect").val();
+
+                $.ajax({
+                    url: "/api/Person/Get",
+                    method: "GET",
+                    headers: { "Accept": selectedContentType },
+                    beforeSend: function (xhr) {
+                        // Add the XMLHttpRequest header
+                        xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+                    },
+                    success: function (data, textStatus, jqXHR) {
+                        if (selectedContentType === "application/json") {
+                            // Handle JSON response
+                            $("#resultDisplay").html("<pre>" + JSON.stringify(data, null, 2) + "</pre>");
+                        } else if (selectedContentType === "text/html") {
+                            // Handle HTML response
+                            $("#resultDisplay").html(data);
+                        } else if (selectedContentType === "text/plain") {
+                            // Handle plain text response
+                            $("#resultDisplay").text(data);
+                        } else {
+                            $("#resultDisplay").html("<pre>" + JSON.stringify(data, null, 2) + "</pre>");
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        $("#resultDisplay").html("Error: " + errorThrown);
+                    }
+                });
+            });
+        });
+
+    </script>
+}
