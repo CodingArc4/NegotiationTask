@@ -15,7 +15,7 @@ namespace NegotiationTask
             // Add services to the container.
             builder.Services.AddControllersWithViews(opt =>
             {
-                //opt.Filters.Add<NegotiationFilter
+                //opt.Filters.Add<NegotiationFilter>
                 opt.OutputFormatters.Insert(0, new HtmlFormater());
                 opt.OutputFormatters.Insert(0, new PlainFormater());
 

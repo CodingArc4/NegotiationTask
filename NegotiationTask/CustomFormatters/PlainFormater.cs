@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc.Formatters;
+using NegotiationTask.Models;
 using System.Text;
 
 namespace NegotiationTask.CustomFormatters
 {
-    public class PlainFormater:TextOutputFormatter
+    public class PlainFormater : TextOutputFormatter
     {
         public PlainFormater()
         {
@@ -18,10 +19,19 @@ namespace NegotiationTask.CustomFormatters
 
             if (content != null)
             {
-                var contentString = content.ToString();
-                await response.WriteAsync(contentString, selectedEncoding);
-            }
-        }
+                var plainTextContent = new StringBuilder();
 
+                foreach (var person in (List<Person>)content)
+                {
+                    plainTextContent.AppendLine($"Id : {person.Id}");
+                    plainTextContent.AppendLine($"Name : {person.Name}");
+                    plainTextContent.AppendLine($"Description : {person.Description}");
+                    plainTextContent.AppendLine();
+                }
+
+                await response.WriteAsync(plainTextContent.ToString(), selectedEncoding);
+            }
+
+        }
     }
 }
