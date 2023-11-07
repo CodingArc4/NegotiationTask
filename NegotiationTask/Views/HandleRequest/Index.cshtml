@@ -24,16 +24,14 @@
     <script>
         $(document).ready(function () {
             $("#submitButton").click(function () {
+                debugger;
                 var selectedContentType = $("#contentSelect").val();
+                var Headers = { "Accept": selectedContentType };
 
                 $.ajax({
                     url: "/api/Person/Get",
-                    method: "GET",
-                    headers: { "Accept": selectedContentType },
-                    beforeSend: function (xhr) {
-                        // Add the XMLHttpRequest header
-                        xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-                    },
+                    type: 'GET',
+                    headers: Headers,
                     success: function (data, textStatus, jqXHR) {
                         if (selectedContentType === "application/json") {
                             // Handle JSON response
@@ -44,7 +42,7 @@
                         } else if (selectedContentType === "text/plain") {
                             // Handle plain text response
                             $("#resultDisplay").text(data);
-                        }else{
+                        } else {
                             $("#resultDisplay").html("<pre>" + JSON.stringify(data, null, 2) + "</pre>");
                         }
                     },

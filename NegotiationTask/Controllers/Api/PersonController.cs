@@ -24,12 +24,17 @@ namespace NegotiationTask.Controllers.Api
 
             var persons = await _db.Persons.ToListAsync();
 
-            if (Request.Headers["X-Requested-With"] == "XMLHttpTRequest")
+            if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
             {
-                return PartialView("_Partial", persons);
+                // Handle Ajax request
+                return Ok(persons);
             }
-           return View("FullView", persons);
-           
+            else
+            {
+                // Handle non-Ajax request
+                return View("FullView", persons);
+            }
+
         }
 
         [HttpPost("Add")]
