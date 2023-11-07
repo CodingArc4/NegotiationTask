@@ -24,10 +24,9 @@
     <script>
         $(document).ready(function () {
             $("#submitButton").click(function () {
-                debugger;
+                //debugger;
                 var selectedContentType = $("#contentSelect").val();
                 var Headers = { "Accept": selectedContentType };
-
                 $.ajax({
                     url: "/api/Person/Get",
                     type: 'GET',

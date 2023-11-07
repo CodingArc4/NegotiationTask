@@ -26,12 +26,11 @@ namespace NegotiationTask.Controllers.Api
 
             if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
             {
-                // Handle Ajax request
                 return Ok(persons);
+                //return PartialView("_Partial", persons);
             }
             else
             {
-                // Handle non-Ajax request
                 return View("FullView", persons);
             }
 
