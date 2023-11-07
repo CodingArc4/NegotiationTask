@@ -10,28 +10,42 @@ namespace NegotiationTask.CustomFormatters
         {
             SupportedMediaTypes.Add("text/plain");
             SupportedEncodings.Add(Encoding.UTF8);
+            SupportedEncodings.Add(Encoding.Unicode);
+        }
+
+        protected override bool CanWriteType(Type? type)
+        {
+            if(typeof(Person).IsAssignableFrom(type)||typeof(IEnumerable<Person>).IsAssignableFrom(type)) {
+                return base.CanWriteType(type);
+            }
+            return false;
         }
 
         public override async Task WriteResponseBodyAsync(OutputFormatterWriteContext context, Encoding selectedEncoding)
         {
             var response = context.HttpContext.Response;
-            var content = context.Object;
+            var buffer = new StringBuilder();
 
-            if (content != null)
+            if(context.Object is IEnumerable<Person>)
             {
-                var plainTextContent = new StringBuilder();
-
-                foreach (var person in (List<Person>)content)
+                foreach( var persons in ((IEnumerable<Person>)context.Object) )
                 {
-                    plainTextContent.AppendLine($"Id : {person.Id}");
-                    plainTextContent.AppendLine($"Name : {person.Name}");
-                    plainTextContent.AppendLine($"Description : {person.Description}");
-                    plainTextContent.AppendLine();
+                    PlainText(buffer,persons);
                 }
-
-                await response.WriteAsync(plainTextContent.ToString(), selectedEncoding);
             }
+            else
+            {
+                PlainText(buffer, (Person)context.Object);
+            }
+            await response.WriteAsync(buffer.ToString());          
+        }
 
+        private static void PlainText(StringBuilder builder,Person person)
+        {
+            builder.AppendLine($"Id : {person.Id}");
+            builder.AppendLine($"Name : {person.Name}");
+            builder.AppendLine($"Description : {person.Description}");
+            builder.AppendLine();
         }
     }
 }

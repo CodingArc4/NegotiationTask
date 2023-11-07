@@ -13,13 +13,19 @@ namespace NegotiationTask
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.AddControllersWithViews(opt =>
+            builder.Services.AddControllersWithViews();
+
+            builder.Services.AddControllers(opt =>
             {
                 //opt.Filters.Add<NegotiationFilter>
+                opt.RespectBrowserAcceptHeader = true;
+                opt.ReturnHttpNotAcceptable = true;
+
                 opt.OutputFormatters.Insert(0, new HtmlFormater());
                 opt.OutputFormatters.Insert(0, new PlainFormater());
 
             }).AddXmlDataContractSerializerFormatters();
+
 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
             {

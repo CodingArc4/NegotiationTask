@@ -21,8 +21,15 @@ namespace NegotiationTask.Controllers.Api
         [HttpGet("Get")]
         public async Task<IActionResult> GetPersons()
         {
+
             var persons = await _db.Persons.ToListAsync();
-            return Ok(persons);
+
+            if (Request.Headers["X-Requested-With"] == "XMLHttpTRequest")
+            {
+                return PartialView("_Partial", persons);
+            }
+           return View("FullView", persons);
+           
         }
 
         [HttpPost("Add")]

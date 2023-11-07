@@ -44,7 +44,7 @@
                         } else if (selectedContentType === "text/plain") {
                             // Handle plain text response
                             $("#resultDisplay").text(data);
-                        } else {
+                        }else{
                             $("#resultDisplay").html("<pre>" + JSON.stringify(data, null, 2) + "</pre>");
                         }
                     },
@@ -54,6 +54,5 @@
                 });
             });
         });
-
     </script>
 }
