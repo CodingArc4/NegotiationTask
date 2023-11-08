@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NegotiationTask.Data;
-using NegotiationTask.FIlter;
-using NegotiationTask.Models;
 
 namespace NegotiationTask.Controllers
 {

@@ -2,7 +2,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using NegotiationTask.CustomFormatters;
 using NegotiationTask.Data;
-using NegotiationTask.FIlter;
 
 namespace NegotiationTask
 {
@@ -17,7 +16,6 @@ namespace NegotiationTask
 
             builder.Services.AddControllers(opt =>
             {
-                //opt.Filters.Add<NegotiationFilter>
                 opt.RespectBrowserAcceptHeader = true;
                 opt.ReturnHttpNotAcceptable = true;
 

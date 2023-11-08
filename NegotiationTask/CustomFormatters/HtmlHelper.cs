@@ -28,7 +28,6 @@ namespace NegotiationTask.CustomFormatters
             html.Append("</tbody>");
             html.Append("</table>");
             return html.ToString();
-
         }
     }
 }

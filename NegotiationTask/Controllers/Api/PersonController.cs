@@ -33,7 +33,6 @@ namespace NegotiationTask.Controllers.Api
             {
                 return View("FullView", persons);
             }
-
         }
 
         [HttpPost("Add")]
